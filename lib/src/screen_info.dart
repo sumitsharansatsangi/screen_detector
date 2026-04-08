@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'enums.dart';
+import 'device_capabilities.dart';
 
 class ScreenInfo {
   final PlatformType platform;
@@ -39,6 +40,13 @@ class ScreenInfo {
   bool get isDesktop => deviceType == DeviceType.desktop;
   bool get isTV => category == DeviceCategory.tv;
   bool get isFoldable => category == DeviceCategory.foldable;
+  bool get isWatch => deviceType == DeviceType.watch;
+  bool get isWearable => category == DeviceCategory.wearable;
+  bool get isHybridInput => inputType == InputType.hybrid;
+
+  /// Get device capabilities based on detected properties.
+  DeviceCapabilities get capabilities =>
+      DeviceCapabilities.detect(platform, this);
 
   bool get isWide =>
       screenType == ScreenType.expanded || screenType == ScreenType.large;

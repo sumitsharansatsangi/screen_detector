@@ -19,6 +19,7 @@ enum DeviceType {
   phone,
   tablet,
   desktop,
+  watch,
   unknown,
 }
 
@@ -28,6 +29,7 @@ enum DeviceCategory {
   desktop,
   tv,
   foldable,
+  wearable,
 }
 
 enum DevicePosture {
@@ -40,6 +42,7 @@ enum DevicePosture {
 enum InputType {
   touch,
   mouseKeyboard,
+  hybrid, // Supports both touch and mouse/keyboard (e.g., 2-in-1 laptops)
 }
 
 enum AspectType {

@@ -1,3 +1,4 @@
+import 'package:example/advanced_features.dart';
 import 'package:example/hinge_split.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_detector/screen_detector.dart';
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
             label: "Calendar",
           ),
           NavigationDestination(icon: Icon(Icons.info), label: "Info"),
+          NavigationDestination(icon: Icon(Icons.science), label: "Advanced"),
         ],
         body: AdaptiveLayout(
           compact: _MobileView(index: index),
@@ -130,7 +132,11 @@ class _Content extends StatelessWidget {
       return _CalendarLayout(screen: screen);
     }
 
-    return _InfoView(screen: screen);
+    if (index == 1) {
+      return _InfoView(screen: screen);
+    }
+
+    return const AdvancedFeaturesPage();
   }
 }
 
@@ -372,7 +378,7 @@ class _MonthGrid extends StatelessWidget {
         return Container(
           decoration: BoxDecoration(
             color: isToday
-                ? Theme.of(context).colorScheme.primary.withOpacity(0.15)
+                ? Theme.of(context).colorScheme.primary.withAlpha(39)
                 : null,
             borderRadius: BorderRadius.circular(8),
           ),
@@ -453,6 +459,9 @@ class _InfoView extends StatelessWidget {
         "Posture: ${screen.posture.name}\n"
         "Orientation: ${screen.orientation.name}\n"
         "Input Type: ${screen.inputType.name}\n"
+        "Is Hybrid Input: ${screen.isHybridInput}\n"
+        "Supports Touch: ${screen.supportsTouch}\n"
+        "Supports Mouse/Keyboard: ${screen.supportsMouseKeyboard}\n"
         "Resolution: ${screen.width.toInt()} x ${screen.height.toInt()}\n"
         "Aspect Ratio: ${screen.aspectRatio.toStringAsFixed(2)}\n"
         "Aspect Type: ${screen.aspectType.name}\n"
@@ -461,9 +470,16 @@ class _InfoView extends StatelessWidget {
         "Is Mobile: ${screen.isMobile}\n"
         "Is Tablet: ${screen.isTablet}\n"
         "Is Desktop: ${screen.isDesktop}\n"
+        "Is Watch: ${screen.isWatch}\n"
         "Is TV: ${screen.isTV}\n"
         "Is Foldable: ${screen.isFoldable}\n"
-        "Is Wide: ${screen.isWide}",
+        "Is Wearable: ${screen.isWearable}\n"
+        "Is Wide: ${screen.isWide}\n"
+        "Is Tiny Screen: ${screen.isTinyScreen}\n"
+        "Is Minimal UI: ${screen.isMinimalUI}\n"
+        "Adaptive Padding: ${screen.adaptivePadding}\n"
+        "Adaptive Icon Size: ${screen.adaptiveIconSize}\n"
+        "Adaptive Button Height: ${screen.adaptiveButtonHeight}",
         textAlign: TextAlign.center,
       ),
     );

@@ -1,12 +1,27 @@
-
 import 'package:flutter/widgets.dart';
 
 import 'detector.dart';
 import 'screen_info.dart';
 
+/// Provides screen detection information to descendant widgets.
+///
+/// Wrap your app's root widget with [ScreenProvider] to enable screen
+/// detection throughout the widget tree. Access screen information using
+/// `context.screen` extension.
+///
+/// Example:
+/// ```dart
+/// void main() {
+///   runApp(const ScreenProvider(child: MyApp()));
+/// }
+/// ```
 class ScreenProvider extends StatefulWidget {
+  /// The widget below this widget in the tree.
   final Widget child;
 
+  /// Creates a [ScreenProvider].
+  ///
+  /// The [child] parameter must not be null.
   const ScreenProvider({super.key, required this.child});
 
   @override
@@ -15,24 +30,31 @@ class ScreenProvider extends StatefulWidget {
 
 class _ScreenProviderState extends State<ScreenProvider> {
   ScreenInfo? _screen;
+  MediaQueryData? _lastMediaQuery;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _update();
+    _updateIfNeeded();
   }
 
   @override
   void didUpdateWidget(covariant ScreenProvider oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _update();
+    _updateIfNeeded();
   }
 
-  void _update() {
-    final newScreen = ScreenDetector.of(context);
+  void _updateIfNeeded() {
+    final currentMediaQuery = MediaQuery.of(context);
 
-    if (_screen != newScreen) {
-      setState(() => _screen = newScreen);
+    // Only update if MediaQuery data has actually changed
+    if (_lastMediaQuery != currentMediaQuery) {
+      _lastMediaQuery = currentMediaQuery;
+      final newScreen = ScreenDetector.of(context);
+
+      if (_screen != newScreen) {
+        setState(() => _screen = newScreen);
+      }
     }
   }
 
@@ -68,7 +90,20 @@ class _ScreenInherited extends InheritedWidget {
   }
 }
 
-
+/// Extension on [BuildContext] to provide easy access to screen information.
+///
+/// Requires a [ScreenProvider] ancestor to function properly.
 extension ScreenContext on BuildContext {
+  /// Gets the current screen information.
+  ///
+  /// Throws an assertion error if no [ScreenProvider] is found in the widget tree.
+  ///
+  /// Example:
+  /// ```dart
+  /// final screen = context.screen;
+  /// if (screen.isMobile) {
+  ///   // Mobile-specific logic
+  /// }
+  /// ```
   ScreenInfo get screen => _ScreenInherited.of(this);
 }
