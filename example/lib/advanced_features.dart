@@ -9,9 +9,7 @@ class AdvancedFeaturesPage extends StatefulWidget {
 }
 
 class _AdvancedFeaturesPageState extends State<AdvancedFeaturesPage> {
-  // bool useCustomBreakpoints = false;
-  // bool useAnimatedLayout = false;
-  // bool showFoldableFeatures = false;
+  bool debugMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +19,13 @@ class _AdvancedFeaturesPageState extends State<AdvancedFeaturesPage> {
       appBar: AppBar(
         title: const Text('Advanced Features Demo'),
         actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.settings),
-          //   onPressed: _showSettings,
-          // ),
+          IconButton(
+            icon: Icon(
+              debugMode ? Icons.bug_report : Icons.bug_report_outlined,
+            ),
+            onPressed: () => setState(() => debugMode = !debugMode),
+            tooltip: 'Toggle Debug Mode',
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -132,6 +133,20 @@ class _AdvancedFeaturesPageState extends State<AdvancedFeaturesPage> {
             ),
             const SizedBox(height: 8),
             Text('Hardware Hinge Detected: ${hinge != null}'),
+            Text(
+              'Display Features Count: ${MediaQuery.of(context).displayFeatures.length}',
+            ),
+            Text(
+              'Screen Size: ${MediaQuery.of(context).size.width.toInt()}x${MediaQuery.of(context).size.height.toInt()}',
+            ),
+            if (debugMode) ...[
+              Text(
+                'Display Features: ${MediaQuery.of(context).displayFeatures.map((f) => f.type.toString()).join(', ')}',
+              ),
+              Text(
+                'Foldable Size Check: ${MediaQuery.of(context).size.width >= 600 && MediaQuery.of(context).size.width <= 900}',
+              ),
+            ],
             if (hinge != null) ...[
               Text('Hinge Bounds: ${hinge.bounds}'),
               // Text('Is Separating: ${hinge.isSeparating}'),
