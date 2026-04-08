@@ -1,6 +1,6 @@
 name: screen_detector
 description: "A powerful adaptive screen detection and layout system for Flutter (mobile, tablet, desktop, foldables, TV)"
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/sumitsharansatsangi/screen_detector
 
 topics:
