@@ -6,7 +6,7 @@ import 'screen_provider.dart';
 /// Represents a destination in the adaptive navigation.
 class AdaptiveNavigationDestination {
   /// The icon to display for this destination.
-  final Widget icon;
+  final Icon icon;
 
   /// The label to display for this destination.
   final String label;
@@ -77,91 +77,91 @@ class AdaptiveNavigation extends StatelessWidget {
   });
 
   Widget _buildBottomNav(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 80.0,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border(top: BorderSide(color: borderColor)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(destinations.length, (index) {
-          final dest = destinations[index];
-          final isSelected = index == selectedIndex;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () => onDestinationSelected(index),
-              child: Semantics(
-                label:
-                    '${dest.label}, ${isSelected ? 'selected' : 'not selected'}',
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      (dest.icon as Icon).icon,
-                      color: isSelected
-                          ? selectedColor
-                          : unselectedColor,
-                    ),
-                    Text(
-                      dest.label,
-                      style: TextStyle(
-                        color: isSelected
-                            ? selectedColor
-                            : unselectedColor,
-                        fontSize: 12,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          border: Border(top: BorderSide(color: borderColor)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(destinations.length, (index) {
+            final dest = destinations[index];
+            final isSelected = index == selectedIndex;
+            return Expanded(
+              child: GestureDetector(
+                onTap: () => onDestinationSelected(index),
+                child: Semantics(
+                  label:
+                      '${dest.label}, ${isSelected ? 'selected' : 'not selected'}',
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        (dest.icon).icon,
+                        color: isSelected ? selectedColor : unselectedColor,
                       ),
-                    ),
-                  ],
+                      Text(
+                        dest.label,
+                        style: TextStyle(
+                          color: isSelected ? selectedColor : unselectedColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
 
   Widget _buildRail(BuildContext context, bool extended) {
-    return Container(
+    return SizedBox(
       width: extended ? 200.0 : 72.0,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border(right: BorderSide(color: borderColor)),
-      ),
-      child: Column(
-        children: List.generate(destinations.length, (index) {
-          final dest = destinations[index];
-          final isSelected = index == selectedIndex;
-          return GestureDetector(
-            onTap: () => onDestinationSelected(index),
-            child: Semantics(
-              label:
-                  '${dest.label}, ${isSelected ? 'selected' : 'not selected'}',
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                child: Row(
-                  children: [
-                    Icon(
-                      (dest.icon as Icon).icon,
-                      color: isSelected ? selectedColor : unselectedColor,
-                    ),
-                    if (extended) ...[
-                      const SizedBox(width: 16),
-                      Text(
-                        dest.label,
-                        style: TextStyle(
-                          color: isSelected ? selectedColor : unselectedColor,
-                        ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          border: Border(right: BorderSide(color: borderColor)),
+        ),
+        child: Column(
+          children: List.generate(destinations.length, (index) {
+            final dest = destinations[index];
+            final isSelected = index == selectedIndex;
+            return GestureDetector(
+              onTap: () => onDestinationSelected(index),
+              child: Semantics(
+                label:
+                    '${dest.label}, ${isSelected ? 'selected' : 'not selected'}',
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Row(
+                    children: [
+                      Icon(
+                        (dest.icon).icon,
+                        color: isSelected ? selectedColor : unselectedColor,
                       ),
+                      if (extended) ...[
+                        const SizedBox(width: 16),
+                        Text(
+                          dest.label,
+                          style: TextStyle(
+                            color: isSelected ? selectedColor : unselectedColor,
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
