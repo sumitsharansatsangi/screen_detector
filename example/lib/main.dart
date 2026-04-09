@@ -41,12 +41,12 @@ class _HomePageState extends State<HomePage> {
         selectedIndex: index,
         onDestinationSelected: (i) => setState(() => index = i),
         destinations: const [
-          NavigationDestination(
+          AdaptiveNavigationDestination(
             icon: Icon(Icons.calendar_today),
             label: "Calendar",
           ),
-          NavigationDestination(icon: Icon(Icons.info), label: "Info"),
-          NavigationDestination(icon: Icon(Icons.science), label: "Advanced"),
+          AdaptiveNavigationDestination(icon: Icon(Icons.info), label: "Info"),
+          AdaptiveNavigationDestination(icon: Icon(Icons.science), label: "Advanced"),
         ],
         body: AdaptiveLayout(
           compact: _MobileView(index: index),
