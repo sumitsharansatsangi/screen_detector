@@ -1,3 +1,6 @@
+## 0.0.3
+* Adaptive Navigation added
+
 ## 0.0.2
 * Functionality Improved
 
